@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <scala.binary.version>2.12</scala.binary.version>
-        <clickhouse.jdbc.version>0.9.0</clickhouse.jdbc.version>
+
     </properties>
 
 
@@ -69,6 +69,14 @@
             <version>3.3.0-1.20</version>
         </dependency>
 
+
+        <!-- Source: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.6.0</version>
+        </dependency>
+
         <!-- ClickHouse -->
         <dependency>
             <groupId>com.clickhouse</groupId>
@@ -83,6 +91,32 @@
             <version>1.2.11</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-connector-clickhouse</artifactId>-->
+<!--            <version>3.0.0-1.20</version>-->
+<!--        </dependency>-->
+
+        <!-- 这个是华为开源的，比较不难用，参数等几乎找不到文档 -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-connector-clickhouse</artifactId>-->
+<!--            <version>1.20.0-h0.cbu.mrs.360.r9</version>-->
+<!--        </dependency>-->
+
+        <!-- 这个是其他社区开源的，很滞后，目前只到 flink 1.17 -->
+<!--        <dependency>-->
+<!--            <groupId>io.github.therealhieu</groupId>-->
+<!--            <artifactId>flink-connector-clickhouse</artifactId>-->
+<!--            <version>1.19.0-1.0.0</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <repositories>
@@ -96,6 +130,10 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>huaweicloud-sdk</id>
+            <url>https://repo.huaweicloud.com/mirrors_sdk/public/</url>
         </repository>
         <!-- 阿里云仓库 -->
         <repository>
