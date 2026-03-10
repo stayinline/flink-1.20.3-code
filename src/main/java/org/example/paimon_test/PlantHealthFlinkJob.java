@@ -47,7 +47,7 @@ public class PlantHealthFlinkJob {
                         "'connector'='kafka'," +
                         "'topic'='dwd_plant_health_detail'," +
                         "'properties.bootstrap.servers'='192.168.1.124:9092'," +
-                        "'properties.group.id'='flink-paimon-test-v3'," +
+                        "'properties.group.id'='flink-paimon-test-v4'," +
                         "'json.ignore-parse-errors'='true'," +
                         "'scan.startup.mode'='earliest-offset'," +
                         "'format'='json'" +
@@ -66,7 +66,7 @@ public class PlantHealthFlinkJob {
 
         // Paimon Table
         tEnv.executeSql(
-                "CREATE TABLE IF NOT EXISTS plant_health_paimon_v2 (" +
+                "CREATE TABLE IF NOT EXISTS plant_health_paimon_v4 (" +
                         "greenhouse_id STRING," +
                         "ts TIMESTAMP(3)," +
                         "crop_type STRING," +
@@ -84,7 +84,11 @@ public class PlantHealthFlinkJob {
                         "soil_ph DOUBLE," +
                         "temperature DOUBLE," +
                         "humidity DOUBLE," +
-                        "PRIMARY KEY (greenhouse_id) NOT ENFORCED" +
+                        "PRIMARY KEY (greenhouse_id,ts) NOT ENFORCED" +
+                        ")" +
+                        "WITH (" +
+                        "'bucket'='4'," +
+                        "'changelog-producer'='input'" +
                         ")"
         );
 
@@ -94,7 +98,7 @@ public class PlantHealthFlinkJob {
 
         // Kafka -> Paimon
         tEnv.executeSql(
-                "INSERT INTO plant_health_paimon_v2 " +
+                "INSERT INTO plant_health_paimon_v4 " +
                         "SELECT * FROM default_catalog.default_database.kafka_source"
         );
     }
