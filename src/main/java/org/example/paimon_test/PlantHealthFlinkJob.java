@@ -13,7 +13,7 @@ public class PlantHealthFlinkJob {
                 StreamExecutionEnvironment.getExecutionEnvironment();
         env.enableCheckpointing(1000);
 //        String filePath = "'file:///d:/paimon_warehouse'";
-        String filePath = "'/root/flink/flink-1.20.3/paimon_warehouse'";
+        String filePath = "'file:///root/flink/flink-1.20.3/paimon_warehouse'";
 
         EnvironmentSettings settings =
                 EnvironmentSettings.newInstance()
