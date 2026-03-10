@@ -13,7 +13,7 @@ public class PlantHealthFlinkJob {
                 StreamExecutionEnvironment.getExecutionEnvironment();
         env.enableCheckpointing(1000);
 //        String filePath = "'file:///d:/paimon_warehouse'";
-        String filePath = "'file:///root/flink/flink-1.20.3/paimon_warehouse'";
+        String filePath = "file:///root/flink/flink-1.20.3/paimon_warehouse";
 
         EnvironmentSettings settings =
                 EnvironmentSettings.newInstance()
@@ -58,7 +58,7 @@ public class PlantHealthFlinkJob {
         tEnv.executeSql(
                 "CREATE CATALOG paimon WITH (" +
                         "'type'='paimon'," +
-                        "'warehouse'=" + filePath +
+                        "'warehouse'='" + filePath + "'" +
                         ")"
         );
 
@@ -96,6 +96,6 @@ public class PlantHealthFlinkJob {
         tEnv.executeSql(
                 "INSERT INTO plant_health_paimon_v2 " +
                         "SELECT * FROM default_catalog.default_database.kafka_source"
-        ).await();
+        );
     }
 }
