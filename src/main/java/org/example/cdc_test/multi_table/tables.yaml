@@ -1,0 +1,15 @@
+tables:
+  - source_db: test_db
+    source_table: dbo.users
+    sink_db: testdb
+    sink_table: users
+
+  - source_db: test_db
+    source_table: dbo.orders
+    sink_db: testdb
+    sink_table: orders
+
+  - source_db: test_db
+    source_table: dbo.products
+    sink_db: testdb
+    sink_table: products

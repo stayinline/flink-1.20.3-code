@@ -1,4 +1,4 @@
-package org.example.sql_server_test;
+package org.example.cdc_test.sql_server_test;
 
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.configuration.Configuration;
@@ -10,14 +10,17 @@ import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
-import org.apache.flink.types.RowKind;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.Properties;
 import java.time.Duration;
+import java.util.Properties;
 
+/**
+ * 这是一个测试过，可用的job代码
+ * 从SQLServer 同步数据到 clickhouse
+ */
 public class SqlServerToClickHouseJob {
 
     public static void main(String[] args) throws Exception {
@@ -55,12 +58,12 @@ public class SqlServerToClickHouseJob {
                 )
         );
 
-        EnvironmentSettings settings = 
+        EnvironmentSettings settings =
                 EnvironmentSettings.newInstance()
                         .inStreamingMode()
                         .build();
 
-        StreamTableEnvironment tEnv = 
+        StreamTableEnvironment tEnv =
                 StreamTableEnvironment.create(env, settings);
 
         // ------------------------------------------------------------
@@ -124,11 +127,10 @@ public class SqlServerToClickHouseJob {
 
     public static class ClickHouseSink extends RichSinkFunction<Row> {
 
+        private static final int BATCH_SIZE = 1;
         private transient Connection connection;
         private transient PreparedStatement ps;
-
         private int batchSize = 0;
-        private static final int BATCH_SIZE = 1;
 
         @Override
         public void open(Configuration parameters) throws Exception {
