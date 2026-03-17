@@ -24,8 +24,13 @@ import java.util.Properties;
 /**
  * 这是一个多表同时读取的job，也就是一个job对应tables.yaml 中配置的所有表。
  * 适用于表多，但是数据量小的场景。便于开发，不方便维护。
- *
+ * <p>
  * 这个job没有手动调试运行。只可当做逻辑参考。
+ * <p>
+ * 这个job的缺点是使用了一个自定义的 ClickHouseSink ，有以下缺点：
+ * （1）批量写入效率低。对比 Flink 官方的 JDBCSink 而言
+ * （2）没有异步处理
+ * （3）每一个数据库连接，每一次都得重新创建，很耗时
  */
 public class MultiTableSqlServerCdcJob {
 

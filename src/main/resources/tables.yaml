@@ -1,0 +1,9 @@
+tables:
+  - sourceDb: test_db
+    sourceTable: dbo.users
+    sinkDb: testdb
+    sinkTable: users
+  - sourceDb: test_db
+    sourceTable: dbo.orders
+    sinkDb: testdb
+    sinkTable: orders
