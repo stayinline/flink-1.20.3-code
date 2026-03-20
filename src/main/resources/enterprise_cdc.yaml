@@ -1,0 +1,34 @@
+flink:
+  # Source 算子并行度
+  parallelism: 4
+  # Sink 算子并行度（建议 <= parallelism）
+  sinkParallelism: 2
+  # Checkpoint 间隔（ms）
+  checkpointIntervalMs: 10000
+  # 最大自动重启次数
+  maxRestartAttempts: 5
+  # 每次重启之间的等待时间（s）
+  restartDelaySeconds: 30
+
+source:
+  hostname: 192.168.250.46
+  port: "1433"
+  username: sa
+  password: "Test@123456"
+  database: test_db
+  # 通配符捕获 dbo schema 下所有表
+  tablePattern: "dbo.*"
+  # initial = 先全量快照再消费增量；latest = 只消费新变更
+  startupMode: initial
+
+sink:
+  url: "jdbc:clickhouse://192.168.1.124:8123/testdb"
+  username: default
+  password: "65e84be3"
+  # 批量写入条数阈值
+  batchSize: 500
+  # 时间触发 flush 间隔（ms），低流量时防止数据积压
+  batchIntervalMs: 2000
+  # true = 写入 is_deleted=1 的墓碑行（推荐，配合 ReplacingMergeTree FINAL 查询）
+  # false = 跳过 DELETE 事件
+  softDelete: true
